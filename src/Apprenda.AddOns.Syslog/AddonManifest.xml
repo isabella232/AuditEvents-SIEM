@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<addonManifest xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xmlns="http://schemas.apprenda.com/AddonManifest"
+               xsi:schemaLocation="http://schemas.apprenda.com/AddonManifest http://apprenda.com/schemas/platform/7.0/AddonManifest.xsd"
+               name="Syslog Connection"
+               manifestVersion="2"
+               version="1"
+               description="Provides connection information for an operator-designated Syslog endpoint scoped to a development team."
+               deploymentNotes="This add-on allows operators to publish a syslog endpoint including host, port, and protocol as well as the type of Syslog receiver at that endpoint to a development team"
+               developerHelp="There are no inherent credentials support for this add-on - it is intended for transport-only endpoint definition by your platform operators"
+               vendor="Apprenda"
+               author="Jonathan Choy (@tetsujinoni)"
+               provisioningUsername="n/a"
+               provisioningPassword=""
+               provisioningLocation="n/a">
+  <properties>
+    <property key="Flavor" displayName="Syslog Flavor" description="Rfc3164, Rfc5424, Cef"  value="Rfc5424" />   
+    <property key="Host" displayName="Host" description="(name or IP address)"  />
+    <property key="Port" value="514" />
+    <property key="Protocol" value="tcp" displayName="Protocol" description="(tcp, encryptedtcp (for TLS over TCP) or udp)" />
+    <property key="MapType" value="default" displayName="Event Map" description="Event Text Mapping Function (see documentation)"/>
+  </properties>
+  <parameters/>
+</addonManifest>

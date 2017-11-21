@@ -1,0 +1,204 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B11E36B1-DA5B-4B4F-9705-F43764CF807A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Apprenda.AuditEventForwarder.Syslog</RootNamespace>
+    <AssemblyName>Apprenda.AuditEventForwarder.Syslog</AssemblyName>
+    <ProjectTypeGuids>{3D9AD99F-2412-4246-B90B-4EAA41C64699};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <StartArguments>
+    </StartArguments>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <StartupObject>
+    </StartupObject>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <Prefer32Bit>false</Prefer32Bit>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Prefer32Bit>false</Prefer32Bit>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SaaSGrid.API, Version=6.11.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\SaaSGrid.API.dll</HintPath>
+    </Reference>
+    <Reference Include="SyslogNet.Client, Version=1.0.3.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\SyslogNet.Client.0.3.3\lib\net40\SyslogNet.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core">
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization">
+    </Reference>
+    <Reference Include="System.ServiceModel">
+    </Reference>
+    <Reference Include="System.ServiceModel.Web">
+    </Reference>
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AddOnExtensionConfiguration.cs" />
+    <Compile Include="Apprenda81CallsiteMap.AuthenticationWorkflows.cs">
+      <DependentUpon>Apprenda81CallsiteMap.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Apprenda81CallsiteMap.Catalog.cs">
+      <DependentUpon>Apprenda81CallsiteMap.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Apprenda81CallsiteMap.Citadel.cs">
+      <DependentUpon>Apprenda81CallsiteMap.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Apprenda81CallsiteMap.cs" />
+    <Compile Include="Apprenda81CallsiteMap.CustomPropertyManager.cs">
+      <DependentUpon>Apprenda81CallsiteMap.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Apprenda81CallsiteMap.CustomUrlCertificateManager.cs">
+      <DependentUpon>Apprenda81CallsiteMap.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Apprenda81CallsiteMap.DevPortalControllers.cs">
+      <DependentUpon>Apprenda81CallsiteMap.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Apprenda81CallsiteMap.EusHandler.cs">
+      <DependentUpon>Apprenda81CallsiteMap.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Apprenda81CallsiteMap.LoggingService.cs">
+      <DependentUpon>Apprenda81CallsiteMap.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Apprenda81CallsiteMap.PlatformRegistry.cs">
+      <DependentUpon>Apprenda81CallsiteMap.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Apprenda81CallsiteMap.PromotionTasks.cs">
+      <DependentUpon>Apprenda81CallsiteMap.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Apprenda81CallsiteMap.ProviderPortal.cs">
+      <DependentUpon>Apprenda81CallsiteMap.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Apprenda81CallsiteMap.SocControllers.cs">
+      <DependentUpon>Apprenda81CallsiteMap.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Apprenda81CallsiteMap.TenantPage.cs">
+      <DependentUpon>Apprenda81CallsiteMap.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Apprenda81CallsiteMap.TenantPortalService.cs">
+      <DependentUpon>Apprenda81CallsiteMap.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Apprenda81CallsiteMap.UserManager.cs">
+      <DependentUpon>Apprenda81CallsiteMap.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Apprenda81CallsiteMap.UserRepo.cs">
+      <DependentUpon>Apprenda81CallsiteMap.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuditedEventDtoExtensions.cs" />
+    <Compile Include="AuditedEventMapper.cs" />
+    <Compile Include="BaseAuditCallsiteMap.cs" />
+    <Compile Include="DataTransferObjects\ApplicationVersionDTO.cs" />
+    <Compile Include="DataTransferObjects\DetailsObject.cs" />
+    <Compile Include="DataTransferObjects\ReportCard.cs" />
+    <Compile Include="IAuditCallsiteMap.cs" />
+    <Compile Include="IExtensionConfiguration.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service.cs" />
+    <Compile Include="TestExtensionConfiguration.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ReleaseFiles Include="bin\release\*.*" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Target Name="AfterBuild" Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PropertyGroup>
+      <OutputDir>..\archive\services\$(ProjectName)\</OutputDir>
+    </PropertyGroup>
+    <ItemGroup>
+      <InputDir Include="bin\Release\*.*" />
+    </ItemGroup>
+    <Makedir Directories="$(OutputDir)" />
+    <Copy SourceFiles="@(InputDir)" DestinationFolder="$(OutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{3D9AD99F-2412-4246-B90B-4EAA41C64699}">
+        <WcfProjectProperties>
+          <AutoStart>True</AutoStart>
+        </WcfProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  -->
+</Project>
