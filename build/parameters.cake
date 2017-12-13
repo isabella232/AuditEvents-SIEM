@@ -35,6 +35,8 @@ public class BuildParameters{
             "Apprenda.Utils.dll",
             "Newtonsoft.Json.dll",
             "SaaSGrid.API.dll",
+            "FluentAssertions.dll",
+            "FluentAssertions.Core.dll",
             "icon.png",
             "SyslogNet.Client.dll",
             "AddonManifest.xml"

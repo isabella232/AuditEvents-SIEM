@@ -16,12 +16,22 @@ namespace Apprenda.AuditEventForwarder.Syslog
     /// </summary>
     public partial class Apprenda81CallsiteMap
     {
-        private static SyslogMessage LoginFailureMapper(AuditedEventDTO evt)
+        /// <summary>
+        /// Formatter to handle Login Failure events.
+        /// </summary>
+        /// <param name="auditedEvent">The audited event</param>
+        /// <returns>SyslogMessage representing the event.</returns>
+        private static SyslogMessage LoginFailureFormatter(AuditedEventDTO auditedEvent)
         {
-            var loginDetails = FormatLoginFailureDto(evt.Details);
-            return FromEventDTO(evt, Facility.SecurityOrAuthorizationMessages1, Severity.Notice, $"{evt.Operation} {loginDetails}");
+            var loginDetails = FormatLoginFailureDto(auditedEvent.Details);
+            return FromEventDTO(auditedEvent, Facility.SecurityOrAuthorizationMessages1, Severity.Notice, $"{auditedEvent.Operation} {loginDetails}");
         }
 
+        /// <summary>
+        /// Format a JSON body containing a platform Login Failure DTO as a meaninful message.
+        /// </summary>
+        /// <param name="json">The json serialized DTO</param>
+        /// <returns>Meaningful text representation of the DTO</returns>
         private static string FormatLoginFailureDto(string json)
         {
             var jsonDetails = JsonConvert.DeserializeObject<DetailsObject>(json);
@@ -30,12 +40,15 @@ namespace Apprenda.AuditEventForwarder.Syslog
                 $"User {d.Identifier} Reason {d.Reason} Attempts: {d.FailedLoginAttempts}. Was Locked out: {d.WasLockedOut} Locked out: {d.IsLockedOut} ";
         }
 
+        /// <summary>
+        /// Adds the Operation formatters for operations emitted by the Citadel platform service.
+        /// </summary>
         private void ConfigureCitadel()
         {
             AddDefaultMap("Tenant Administrator User Creation");
             AddActionMap("Tenant Creation");
 
-            AddMap("Login Failure", LoginFailureMapper);
+            AddMap("Login Failure", LoginFailureFormatter);
             AddDefaultMap("Reset User Password"); // todo
             AddDefaultMap("Platform User Addition");
             AddDefaultMap("Unauthorized Application Access");
