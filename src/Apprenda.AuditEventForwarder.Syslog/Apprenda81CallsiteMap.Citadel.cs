@@ -1,11 +1,35 @@
-using Apprenda.SaaSGrid.Extensions.DTO;
-using Newtonsoft.Json;
-using SyslogNet.Client;
+// ----------------------------------------------------------------------------------------------------
+// <copyright file="Apprenda81CallsiteMap.Citadel.cs" company="Apprenda, Inc.">
+// Copyright (c) Apprenda, Inc. All rights reserved.
+// Licensed under the MIT license. See the LICENSE.md in the project root for full license information.
+// </copyright>
+// ----------------------------------------------------------------------------------------------------
 
 namespace Apprenda.AuditEventForwarder.Syslog
 {
+    using Apprenda.SaaSGrid.Extensions.DTO;
+    using Newtonsoft.Json;
+    using SyslogNet.Client;
+
+    /// <summary>
+    /// This partial configures the Citadel Service callsite mappings.
+    /// </summary>
     public partial class Apprenda81CallsiteMap
     {
+        private static SyslogMessage LoginFailureMapper(AuditedEventDTO evt)
+        {
+            var loginDetails = FormatLoginFailureDto(evt.Details);
+            return FromEventDTO(evt, Facility.SecurityOrAuthorizationMessages1, Severity.Notice, $"{evt.Operation} {loginDetails}");
+        }
+
+        private static string FormatLoginFailureDto(string json)
+        {
+            var jsonDetails = JsonConvert.DeserializeObject<DetailsObject>(json);
+            var d = JsonConvert.DeserializeObject<LoginFailureDTO>(jsonDetails.Details);
+            return
+                $"User {d.Identifier} Reason {d.Reason} Attempts: {d.FailedLoginAttempts}. Was Locked out: {d.WasLockedOut} Locked out: {d.IsLockedOut} ";
+        }
+
         private void ConfigureCitadel()
         {
             AddDefaultMap("Tenant Administrator User Creation");
@@ -16,34 +40,9 @@ namespace Apprenda.AuditEventForwarder.Syslog
             AddDefaultMap("Platform User Addition");
             AddDefaultMap("Unauthorized Application Access");
             AddDefaultMap("User Password Reset Failed");
-            AddMappedMap(new [] {"Platform User Addition to Tenant Completed"}, "Tenant Add Platform User");
+            AddMappedMap(new[] { "Platform User Addition to Tenant Completed" }, "Tenant Add Platform User");
             AddMappedMap("User Password Rest Completed", "User Password Reset");
-            AddMappedMap(new[] {"Platform User Removal from Tenant Complete"}, "Tenant Remove Platform User");
+            AddMappedMap(new[] { "Platform User Removal from Tenant Complete" }, "Tenant Remove Platform User");
         }
-        SyslogMessage LoginFailureMapper(AuditedEventDTO evt)
-        {
-            var loginDetails = RehydrateLoginFailure(evt.Details);
-            return FromEventDto(evt, Facility.SecurityOrAuthorizationMessages1, Severity.Notice, $"{evt.Operation} {loginDetails}");
-        }
-
-        private string RehydrateLoginFailure(string json)
-        {
-            var jsonDetails = JsonConvert.DeserializeObject<DetailsObject>(json);
-            var d = JsonConvert.DeserializeObject<LoginFailureDto>(jsonDetails.Details);
-            return
-                $"User {d.identifier} reason {d.reason} Attempts: {d.failedLoginAttempts}. Was Locked out: {d.wasLockedOut} Locked out: {d.isLockedOut} ";
-        }
-    }
-
-    public class LoginFailureDto
-    {
-        public string identifier { get; set; }
-        public string emailAddress { get; set; }
-        public string loginUsername { get; set; }
-        public bool knownUser { get; set; }
-        public string wasLockedOut { get; set; }
-        public string isLockedOut { get; set; }
-        public string failedLoginAttempts { get; set; }
-        public string reason { get; set; }
     }
 }

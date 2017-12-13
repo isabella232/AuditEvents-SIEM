@@ -1,36 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// ----------------------------------------------------------------------------------------------------
+// <copyright file="ReportCard.cs" company="Apprenda, Inc.">
+// Copyright (c) Apprenda, Inc. All rights reserved.
+// Licensed under the MIT license. See the LICENSE.md in the project root for full license information.
+// </copyright>
+// ----------------------------------------------------------------------------------------------------
 
 namespace Apprenda.AuditEventForwarder.Syslog
 {
-    class ReportCard
-    {
-        private List<string> infoMessages;
-        private List<string> warningMessages;
-        private List<string> errorMessages;
+    using System.Collections.Generic;
 
+#pragma warning disable CA1812, SA1600 // This type is instantiated by deserialization code; its fields are those provided by the upstream types in the platform.
+    internal class ReportCard
+    {
+        private List<string> _infoMessages;
+        private List<string> _warningMessages;
+        private List<string> _errorMessages;
 
         public List<string> ErrorMessages
         {
-            get { return errorMessages ?? (errorMessages = new List<string>()); }
-            set { errorMessages = value; }
+            get { return _errorMessages ?? (_errorMessages = new List<string>()); }
+            set { _errorMessages = value; }
         }
+
         public List<string> WarningMessages
         {
-            get { return warningMessages ?? (warningMessages = new List<string>()); }
-            set { warningMessages = value; }
+            get { return _warningMessages ?? (_warningMessages = new List<string>()); }
+            set { _warningMessages = value; }
         }
 
         public List<string> InfoMessages
         {
-            get
-            {
-                return infoMessages ?? (infoMessages = new List<string>());
-            }
-            set { infoMessages = value; }
+            get { return _infoMessages ?? (_infoMessages = new List<string>()); }
+            set { _infoMessages = value; }
         }
     }
 }

@@ -1,15 +1,23 @@
-using System;
-using Apprenda.SaaSGrid.Extensions.DTO;
-using Newtonsoft.Json;
-using SyslogNet.Client;
+// ----------------------------------------------------------------------------------------------------
+// <copyright file="Apprenda81CallsiteMap.cs" company="Apprenda, Inc.">
+// Copyright (c) Apprenda, Inc. All rights reserved.
+// Licensed under the MIT license. See the LICENSE.md in the project root for full license information.
+// </copyright>
+// ----------------------------------------------------------------------------------------------------
 
 namespace Apprenda.AuditEventForwarder.Syslog
 {
-    using AuditMapFunc = Func<AuditedEventDTO, SyslogMessage>;
-
+    /// <inheritdoc />
+    /// <summary>
+    /// Provides the Apprenda Audit Events Callsite Map for the Apprenda Cloud Platform version 8.1
+    /// </summary>
     public partial class Apprenda81CallsiteMap : BaseAuditCallsiteMap
     {
-        public Apprenda81CallsiteMap() : base("8.1")
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Apprenda81CallsiteMap"/> class.
+        /// </summary>
+        public Apprenda81CallsiteMap()
+            : base("8.1")
         {
             ConfigureRegistryService();
             ConfigureCustomPropertyService();

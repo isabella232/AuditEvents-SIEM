@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Dictionary>
+  <Words>
+    <Recognized>
+      <Word>Apprenda</Word>
+      <Word>Callsite</Word>
+      <Word>CloudPlatform</Word>
+      <Word>AddOns</Word>
+      <Word>Ons</Word>
+      <Word>Addon</Word>
+      <Word>Rfc</Word>
+      <Word>Cef</Word>
+    </Recognized>
+    <DiscreteExceptions>
+      <Term>Username</Term>
+    </DiscreteExceptions>
+    <Compound>
+      <Term CompoundAlternate="AddOns">addons</Term>
+    </Compound>
+  </Words>
+  <Acronyms>
+    <CasingExceptions>
+      <Acronym>DTO</Acronym> <!-- Data Transfer Objects -->
+    </CasingExceptions>
+  </Acronyms>
+</Dictionary>

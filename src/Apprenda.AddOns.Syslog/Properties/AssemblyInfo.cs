@@ -1,36 +1,22 @@
-﻿using System.Reflection;
-using System.Runtime.CompilerServices;
+﻿// ----------------------------------------------------------------------------------------------------
+// <copyright file="AssemblyInfo.cs" company="Apprenda, Inc.">
+// Copyright (c) Apprenda, Inc. All rights reserved.
+// Licensed under the MIT license. See the LICENSE.md in the project root for full license information.
+// </copyright>
+// ----------------------------------------------------------------------------------------------------
+
+using System.Reflection;
 using System.Runtime.InteropServices;
 
-// General Information about an assembly is controlled through the following
-// set of attributes. Change these attribute values to modify the information
-// associated with an assembly.
 [assembly: AssemblyTitle("Apprenda.AddOns.Syslog")]
-[assembly: AssemblyDescription("")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyDescription("Provides Operator configuration options for Syslog endpoints")]
+[assembly: AssemblyConfiguration("retail")]
+[assembly: AssemblyCompany("Apprenda, Inc.")]
 [assembly: AssemblyProduct("Apprenda.AddOns.Syslog")]
-[assembly: AssemblyCopyright("Copyright ©  2017")]
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
-
-// Setting ComVisible to false makes the types in this assembly not visible
-// to COM components.  If you need to access a type in this assembly from
-// COM, set the ComVisible attribute to true on that type.
+[assembly: AssemblyCopyright("Copyright © 2017")]
+[assembly: AssemblyTrademark("Apprenda")]
+[assembly: AssemblyCulture("neutral")]
 [assembly: ComVisible(false)]
-
-// The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("0fefa635-00fc-401a-b26b-61262e371ae5")]
-
-// Version information for an assembly consists of the following four values:
-//
-//      Major Version
-//      Minor Version
-//      Build Number
-//      Revision
-//
-// You can specify all the values or you can default the Build and Revision Numbers
-// by using the '*' as shown below:
-// [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
