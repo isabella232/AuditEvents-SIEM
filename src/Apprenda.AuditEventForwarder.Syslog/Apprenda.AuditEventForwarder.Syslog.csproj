@@ -135,8 +135,58 @@
     <Compile Include="Apprenda81CallsiteMap.UserRepo.cs">
       <DependentUpon>Apprenda81CallsiteMap.cs</DependentUpon>
     </Compile>
+    <Compile Include="Apprenda81CallsiteMapCEF.AuthenticationWorkflows.cs">
+      <DependentUpon>Apprenda81CallsiteMapCEF.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Apprenda81CallsiteMapCEF.Catalog.cs">
+      <DependentUpon>Apprenda81CallsiteMapCEF.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Apprenda81CallsiteMapCEF.Citadel.cs">
+      <DependentUpon>Apprenda81CallsiteMapCEF.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Apprenda81CallsiteMapCEF.cs" />
+    <Compile Include="Apprenda81CallsiteMapCEF.CustomPropertyManager.cs">
+      <DependentUpon>Apprenda81CallsiteMapCEF.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Apprenda81CallsiteMapCEF.CustomUrlCertificateManager.cs">
+      <DependentUpon>Apprenda81CallsiteMapCEF.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Apprenda81CallsiteMapCEF.DevPortalControllers.cs">
+      <DependentUpon>Apprenda81CallsiteMapCEF.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Apprenda81CallsiteMapCEF.EusHandler.cs">
+      <DependentUpon>Apprenda81CallsiteMapCEF.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Apprenda81CallsiteMapCEF.LoggingService.cs">
+      <DependentUpon>Apprenda81CallsiteMapCEF.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Apprenda81CallsiteMapCEF.PlatformRegistry.cs">
+      <DependentUpon>Apprenda81CallsiteMapCEF.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Apprenda81CallsiteMapCEF.PromotionTasks.cs">
+      <DependentUpon>Apprenda81CallsiteMapCEF.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Apprenda81CallsiteMapCEF.ProviderPortal.cs">
+      <DependentUpon>Apprenda81CallsiteMapCEF.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Apprenda81CallsiteMapCEF.SocControllers.cs">
+      <DependentUpon>Apprenda81CallsiteMapCEF.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Apprenda81CallsiteMapCEF.TenantPage.cs">
+      <DependentUpon>Apprenda81CallsiteMapCEF.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Apprenda81CallsiteMapCEF.TenantPortalService.cs">
+      <DependentUpon>Apprenda81CallsiteMapCEF.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Apprenda81CallsiteMapCEF.UserManager.cs">
+      <DependentUpon>Apprenda81CallsiteMapCEF.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Apprenda81CallsiteMapCEF.UserRepo.cs">
+      <DependentUpon>Apprenda81CallsiteMapCEF.cs</DependentUpon>
+    </Compile>
     <Compile Include="AuditedEventDTOExtensions.cs" />
     <Compile Include="BaseAuditCallsiteMap.cs" />
+    <Compile Include="BaseAuditCallsiteMapCEF.cs" />
     <Compile Include="ConfigurationDto.cs" />
     <Compile Include="DataTransferObjects\ApplicationVersionDTO.cs" />
     <Compile Include="DataTransferObjects\ApplicationVersionLifecycleStrategy.cs" />

@@ -137,7 +137,7 @@ namespace Apprenda.AddOns.Syslog
                 sender.Send(message, serializer);
             }
 
-            mapType.Should().BeOneOf("default");
+            mapType.ToUpperInvariant().Should().BeOneOf("DEFAULT", "8.1", "8.1CEF");
 
             return SuccessResult("The Syslog addon connected successfully.");
         }

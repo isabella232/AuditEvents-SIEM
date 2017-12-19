@@ -21,7 +21,24 @@ namespace Apprenda.AuditEventForwarder.Syslog
         /// <returns>The string without newlines</returns>
         public static string StripNewLines(this string source)
         {
-            return string.IsNullOrEmpty(source) ? string.Empty : source.Replace("\r\n", string.Empty);
+            return String.IsNullOrEmpty(source) ? String.Empty : source.Replace("\r\n", String.Empty);
+        }
+
+        /// <summary>
+        /// Breaks a string into a pair of strings, the last word of the input and the remaining input.
+        /// </summary>
+        /// <param name="phrase">String to break apart</param>
+        /// <returns>a Tuple containing Item2 as the last word of the provided string, and Item1 as all preceding content.</returns>
+        internal static Tuple<string, string> LastWordOf(this string phrase)
+        {
+            if (string.IsNullOrEmpty(phrase))
+            {
+                throw new ArgumentNullException(nameof(phrase));
+            }
+
+            var lastSpace = phrase.LastIndexOf(" ", StringComparison.Ordinal);
+
+            return new Tuple<string, string>(phrase.Remove(lastSpace), lastSpace < phrase.Length ? phrase.Substring(lastSpace + 1) : string.Empty);
         }
     }
 }

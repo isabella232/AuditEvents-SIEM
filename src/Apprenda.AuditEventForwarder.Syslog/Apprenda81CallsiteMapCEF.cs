@@ -11,13 +11,13 @@ namespace Apprenda.AuditEventForwarder.Syslog
     /// <summary>
     /// Provides the Apprenda Audit Events Callsite Map for the Apprenda Cloud Platform version 8.1
     /// </summary>
-    public partial class Apprenda81CallsiteMap : BaseAuditCallsiteMap
+    public partial class Apprenda81CallsiteMapCEF : BaseAuditCallsiteMapCef
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Apprenda81CallsiteMap"/> class.
         /// </summary>
-        public Apprenda81CallsiteMap()
-            : base()
+        public Apprenda81CallsiteMapCEF()
+            : base("8.1")
         {
             ConfigureRegistryService();
             ConfigureCustomPropertyService();

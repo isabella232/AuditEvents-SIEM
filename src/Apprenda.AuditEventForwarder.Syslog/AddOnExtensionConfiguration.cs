@@ -62,8 +62,12 @@ namespace Apprenda.AuditEventForwarder.Syslog
         /// <returns>A callsite map instance</returns>
         private static IAuditCallsiteMap ChooseMap(string mapType)
         {
-            switch (mapType)
+            switch (mapType.ToUpperInvariant())
             {
+                case "8.1CEF":
+                    return new Apprenda81CallsiteMapCEF();
+                case "DEFAULT":
+                case "8.1":
                 default: return new Apprenda81CallsiteMap();
             }
         }

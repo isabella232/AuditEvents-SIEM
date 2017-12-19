@@ -5,6 +5,8 @@
 // </copyright>
 // ----------------------------------------------------------------------------------------------------
 
+using SyslogNet.Client;
+
 namespace Apprenda.AuditEventForwarder.Syslog
 {
     using Apprenda.SaaSGrid.Extensions.DTO;
@@ -33,6 +35,22 @@ namespace Apprenda.AuditEventForwarder.Syslog
                 case AuditEventType.OperationStarting: return "Starting";
                 default: return "Unknown event state";
             }
+        }
+
+        public static SyslogMessage ToSyslogMessage(this AuditedEventDTO auditedEvent, string message) => (auditedEvent == null) ? null : ToSyslogMessage(auditedEvent, Facility.LogAudit, Severity.Informational, message);
+
+        public static SyslogMessage ToSyslogMessage(this AuditedEventDTO auditedEvent, Facility facility, Severity severity, string message)
+        {
+            return (auditedEvent == null) ? null : new SyslogMessage(
+                dateTimeOffset: auditedEvent.Timestamp,
+                facility: facility,
+                severity: severity,
+                hostName: auditedEvent.SourceIP,
+                appName: "ApprendaCloudPlatform",
+                message: message.StripNewLines(),
+                procId: "-",
+                structuredDataElements: new StructuredDataElement[] { },
+                msgId: "-");
         }
     }
 }
