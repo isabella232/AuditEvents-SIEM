@@ -24,37 +24,37 @@ The Syslog Configuration addon provides a connection definition UI for off-platf
   1. As designed, an new copy of the add-on should be added for each Syslog endpoint to be supported by the platform.
   1. On your running platform logged in as a user with System Operations Center access, access the Configuration menu, Platform Add-Ons option.
   1. Click the New Add-On button
-  ![Details](Step4.3.png)
+  ![Details](Step4.3.PNG)
   1. The recommended alias for the addon is `SyslogConfiguration`. 
-  ![Details](Step4.4.png)
+  ![Details](Step4.4.PNG)
   1. The archive is `Apprenda.SyslogAddon.zip` from the release download.
-  ![Details](Step4.5.png)
+  ![Details](Step4.5.PNG)
   1. Click `Edit` to configure the addon.
-  ![Details](Step4.6.0.png)
+  ![Details](Step4.6.0.PNG)
      1. Provisioning properties are unused. The `Location`, `User`, and `Password` properties of the General tab are unused in this add-on.
-     ![Details](Step4.6.1.png)
+     ![Details](Step4.6.1.PNG)
      2. On the Configuration tab, several properties must be configured to match your Syslog receiver's properties.
-     ![Details](Step4.6.2.png)
+     ![Details](Step4.6.2.PNG)
         1. Syslog Flavor: There are two Syslog RFCs which are supported by the Audit Event SIEM project, and an enhanced message format supported by some SIEM products. Choose whether to use the simple RFC3164 Syslog message format, RFC5424 Syslog messages, or ArcSight CEF messages in RFC5424 messages, as is appropriate for the Syslog receiver which is being configured.
         2. Host: the hostname or IP address of the Syslog receiver.
         3. Port: the listening port of the Syslog receiver.
         4. Protocol: the transport protocol, from 'tcp', 'encryptedtcp', or 'udp'. Encrypted TCP is TLS encapsulation over TCP, as supported by [SyslogNet]().
         5. Event Map: The Audit Events SIEM project supports configurable message formatters, to allow customization of the details transmitted to the Syslog receiver and compatibility with multiple versions of the Apprenda Cloud Platform, as new Audited events may be added to the platform from release to release. A default mapper compatible with Apprenda Cloud Platform 8.1 is included as the `default` Event Map.
      1. On the Access tab, configure the Addon for restricted development team access and a single instance per development team.
-    ![Details](Step4.6.3.png)
+    ![Details](Step4.6.3.PNG)
         1. It is recommended that the Syslog addon only be provisioned on the Operator development team or teams.
         2. There should be only one instance of the Syslog addon per development team. 
 ### 5. Test the Add-on Configuration ###
-Using the Actions dropdown, select "Test" for the addon to attempt a connection to the chosen endpoint, and send a test Syslog message from the platform to the Syslog receiver. ![Details](Step5.png) ![Success](Step5.success.png)
+Using the Actions dropdown, select "Test" for the addon to attempt a connection to the chosen endpoint, and send a test Syslog message from the platform to the Syslog receiver. ![Details](Step5.PNG) ![Success](Step5.success.PNG)
 ### 6. Provisioning the Add-on to the Operator Team ###
 1. Connect to the Developer Portal as a member of the Operator development team.
 1. Provision the Add-on into the development team
     1. Click the Add-on management control.
     1. Select the Syslog Connection addon and "Manage".
-    ![Details](Step6.2.png)
+    ![Details](Step6.2.PNG)
     1. Add an instance of the addon.
-    ![Details](Step6.3.png)
-    1. The instance alias should be `syslogconnection` to match the Extension app.config. ![Details](Step6.4.png) ![Success](Step6.success.png)
+    ![Details](Step6.3.PNG)
+    1. The instance alias should be `syslogconnection` to match the Extension app.config. ![Details](Step6.4.PNG) ![Success](Step6.success.PNG)
 
 ### 7. Creating the SIEM Forwarder  workload ###
 1. Connect to the Developer Portal as a member of the Operator development team.
@@ -65,8 +65,8 @@ Using the Actions dropdown, select "Test" for the addon to attempt a connection 
     1. Navigate to the Application Dashboard
     1. Promote the application to Sandbox
 ### 8. Platform Registry Settings ###
-1. Add a registry setting to the Platform Registry through the  System Operations Center. ![Registry Settings](Step8.0.png)
-2. The registry seting should be `Telemetry.AuditEventForwardingTarget` and its value will be `ALIAS(v1)/SysLogAuditForwarder` (The on-platform abbreviated URI for a platfor-routed WCF service endpoint) ![Registry Details](Step8.1.png)
+1. Add a registry setting to the Platform Registry through the  System Operations Center. ![Registry Settings](Step8.0.PNG)
+2. The registry seting should be `Telemetry.AuditEventForwardingTarget` and its value will be `ALIAS(v1)/SysLogAuditForwarder` (The on-platform abbreviated URI for a platfor-routed WCF service endpoint) ![Registry Details](Step8.1.PNG)
 ### 9. Update Considerations ###
 There is no queueing or replay of audited event messages in the platform auditing facility, so a maintenance window for Syslog receivers will require preplannig if platform events going unrecorded off-platform is a policy issue. The platform supports multi-value `Telemetry.AuditEventForwardingTarget` settings in order to transmit to multiple, potentially disparate, systems.
 
