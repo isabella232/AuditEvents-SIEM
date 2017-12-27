@@ -1,0 +1,24 @@
+<div id="header" class="without-secondary-menu"><div class="section clearfix">
+    <!--a href="/" title="Home" rel="home" id="logo"-->
+    <a href="http://apprenda.com" title="Apprenda" rel="home" id="logo">
+        <img src="http://docs.apprenda.com/sites/default/files/apprenda-logo.png" alt="Home">
+    </a>
+    <div id="name-and-slogan">
+        <div id="site-name">
+            <strong>
+                <a href="/docs" title="Home" rel="home"><span>Apprenda Documentation</span></a>
+            </strong>
+        </div>
+    </div> <!-- /#name-and-slogan -->
+    <div id="main-menu" class="navigation">
+        <h2 class="element-invisible">Main menu</h2>
+        <ul id="main-menu-links" class="links clearfix">
+            {% for navItem in site.data.topnav %}
+              <li class="">
+                  <a href="{{ navItem.link }}" title="">{{ navItem.item }}</a>
+              </li>
+              {% endfor %}
+          </ul>
+      </div> <!-- /#main-menu -->
+  </div>
+</div> <!-- /.section, /#header -->

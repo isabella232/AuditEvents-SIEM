@@ -1,0 +1,30 @@
+
+
+{% assign currenttoc = page.toc %}
+
+
+
+<div class="column sidebar" id="sidebar-first">
+  <div class="section">
+    <div class="region region-sidebar-first">
+      <div class="block block-book" id="block-book-navigation">
+        <h2>{{ currenttoc }}</h2>
+        <div class="content">
+          <ul class="menu clearfix">
+              {% for tocitem in site.data.toc[currenttoc] %}
+              <li><a href="{{ tocitem.link }}">{{ tocitem.title }}</a></li>
+              {% endfor %}
+          </ul>
+        </div>
+      </div>
+      <div class="block block-block" id="block-block-6">
+        <h2> Have a question about this? </h2>
+        <div class="content">
+          <p class="rteleft">
+            <a target="_blank" href="http://support.apprenda.com/forums/20505507-questions-and-answers">Ask our team.</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

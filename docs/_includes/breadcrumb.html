@@ -1,0 +1,29 @@
+{% if page.url contains "404.html" %}
+<!--If the page is a 404, just set it to be a link home-->
+<div class="breadcrumb">
+    <a href="/docs">Home</a>
+</div>
+{% else %}
+
+{% assign breadcrumb = page.url | split: "/" %}
+{% assign breadcrumbsize = breadcrumb | size %}
+{% assign breadcrumbsize = breadcrumbsize | minus: 1 %}
+<div class="breadcrumb">
+{% for crumb in breadcrumb %}
+    {% if crumb != "" %}
+        {% if crumb == "docs" %}
+        <a href="/{{crumb}}">Home</a>
+        {% else %}
+        {% assign crumbtitle = crumb | capitalize %}
+        {% if crumbtitle contains "html" %}
+        <a href="{{crumb}}">{{ page.title }}</a>
+        {% else%}
+        <a href="{{crumb}}">{{ crumbtitle | replace: "-", " " }}</a>
+        {% endif%}
+        {% endif%}
+        {% endif%}
+{% endfor %}
+
+</div>
+
+{% endif %}

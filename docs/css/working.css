@@ -1,0 +1,6 @@
+#main-wrapper pre{
+/*overflow-x: auto;*/
+overflow-y: auto;
+/*white-space: pre;*/
+max-height: 600px;
+}

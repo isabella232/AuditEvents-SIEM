@@ -1,0 +1,78 @@
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <meta datatype="xsd:integer" content="0" property="sioc:num_replies" about="/home">
+    <link type="image/png" href="http://docs.apprenda.com/sites/default/files/favicon.png" rel="shortcut icon">
+    <meta property="dc:title" about="/home" content="The Apprenda Platform">
+    <title>{{ page.title }} | {{ site.title }}</title>
+    <link href="{{ page.url }}" rel="canonical">
+
+    <link rel="stylesheet" href="{{ "/css/system.base.css" | relative_url }}">
+    <link rel="stylesheet" href="{{ "/css/system.menus.css" | relative_url }}">
+    <link rel="stylesheet" href="{{ "/css/system.messages.css" | relative_url }}">
+    <link rel="stylesheet" href="{{ "/css/system.theme.css" | relative_url }}">
+    <link rel="stylesheet" href="{{ "/css/book.css" | relative_url }}">
+    <link rel="stylesheet" href="{{ "/css/field.css" | relative_url }}">
+    <link rel="stylesheet" href="{{ "/css/node.css" | relative_url }}">
+    <link rel="stylesheet" href="{{ "/css/search.css" | relative_url }}">
+    <link rel="stylesheet" href="{{ "/css/views.css" | relative_url }}">
+    <link rel="stylesheet" href="{{ "/css/ckeditor.css" | relative_url }}">
+    <link rel="stylesheet" href="{{ "/css/layout.css" | relative_url }}">
+    <link rel="stylesheet" href="{{ "/css/style.css" | relative_url }}">
+    <link rel="stylesheet" href="{{ "/css/colors.css" | relative_url }}">
+    <link rel="stylesheet" href="{{ "/css/apprenda.css" | relative_url }}">
+    <style type="text/css" media="print">@import url("http://docs.apprenda.com/themes/bartik/css/print.css?o1kyz4");</style>
+    <link rel="stylesheet" href="{{ "/css/syntax.css" | relative_url }}">
+    <link rel="stylesheet" href="{{ "/css/working.css" | relative_url }}">
+    <script src="{{ "/js/jquery-3.2.1.min.js" | relative_url }}"></script>
+    <!-- Anchor.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+    <script src="{{ "/js/toc.js" | relative_url }}"></script>
+    <script src="{{ "/js/customscripts.js" | relative_url }}"></script>
+
+    <script src="{{ "/js/jquery.cookie.min.js" | relative_url }}"></script>
+    <script src="{{ "/js/jquery.navgoco.min.js" | relative_url }}"></script>
+    <script>
+           $(document).ready(function() {
+               // Initialize navgoco nav with default options
+               $("li.active").parents('li').toggleClass("active expanded");
+              console.log( $("li.active").parents('li'));
+               $("#mysidebar").navgoco({
+                   caretHtml: '',
+                   accordion: true,
+                   openClass: 'active', // open
+                   save: false, // leave false or nav highlighting doesn't work right
+                   cookie: {
+                       name: 'navgoco',
+                       expires: false,
+                       path: '/'
+                   },
+                   slide: {
+                       duration: 400,
+                       easing: 'swing'
+                   }
+               });
+               //expand the arrows for openned nav items
+               var currentActive = $("li.active");
+               currentActive.each(function(){
+                   if( $(this).hasClass('collapsed') == true){
+                       $(this).removeClass('collapsed');
+                       $(this).addClass('expanded');
+                   }
+               });
+
+               $(".navlink").click(function(){
+                   //when a nav item is clicked, expand or collapse the arrow
+                   var parent = $(this).parent();
+                   if( parent.hasClass('collapsed') == true ){
+                      parent.removeClass('collapsed');
+                      parent.addClass('expanded');
+                  }else if( parent.hasClass('expanded') ==true ){
+                      parent.removeClass('expanded');
+                      parent.addClass('collapsed');
+                      //if there are child folders open, close them
+                  }
+               });
+
+           });
+    </script>
+</head>
