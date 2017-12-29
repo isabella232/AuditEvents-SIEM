@@ -1,5 +1,5 @@
 // ----------------------------------------------------------------------------------------------------
-// <copyright file="Apprenda81CallsiteMap.cs" company="Apprenda, Inc.">
+// <copyright file="Apprenda81CallsiteMapCEF.cs" company="Apprenda, Inc.">
 // Copyright (c) Apprenda, Inc. All rights reserved.
 // Licensed under the MIT license. See the LICENSE.md in the project root for full license information.
 // </copyright>
@@ -14,7 +14,7 @@ namespace Apprenda.AuditEventForwarder.Syslog
     public partial class Apprenda81CallsiteMapCEF : BaseAuditCallsiteMapCef
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Apprenda81CallsiteMap"/> class.
+        /// Initializes a new instance of the <see cref="Apprenda81CallsiteMapCEF"/> class.
         /// </summary>
         public Apprenda81CallsiteMapCEF()
             : base("8.1")

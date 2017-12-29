@@ -7,6 +7,10 @@
 
 namespace Apprenda.AuditEventForwarder.Syslog
 {
+    using Apprenda.SaaSGrid.Extensions.DTO;
+    using Newtonsoft.Json;
+    using SyslogNet.Client;
+
     /// <summary>
     /// This partial provides the mappings for the Registry Service component of the Apprenda Cloud Platform
     /// </summary>
@@ -17,8 +21,24 @@ namespace Apprenda.AuditEventForwarder.Syslog
         /// </summary>
         private void ConfigureRegistryService()
         {
-            AddDefaultMap("Platform Registry Set Value");
-            AddDefaultMap("Platform Registry Delete Value");
+            AddMap("Setting Registry Setting Value Failed", ValueUpdateFormatter);
+            AddMap("Setting Registry Setting Value Completed", ValueUpdateFormatter);
+            AddDefaultMap("Deleting Registry Setting Value Completed");
+            AddDefaultMap("Deleting Registry Setting Value Failed");
+        }
+
+        private SyslogMessage ValueUpdateFormatter(AuditedEventDTO auditedEvent)
+        {
+            if (auditedEvent == null)
+            {
+                return null;
+            }
+
+            var details = JsonConvert.DeserializeObject<DetailsObject>(auditedEvent.Details);
+
+            var message = $"{auditedEvent.Operation} Change from {details.OriginalValue.StripNewLines()} to {details.NewValue.StripNewLines()}";
+
+            return FromEventDTO(auditedEvent, message);
         }
     }
 }

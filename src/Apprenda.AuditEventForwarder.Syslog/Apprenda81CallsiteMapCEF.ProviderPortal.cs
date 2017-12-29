@@ -1,5 +1,5 @@
 // ----------------------------------------------------------------------------------------------------
-// <copyright file="Apprenda81CallsiteMap.ProviderPortal.cs" company="Apprenda, Inc.">
+// <copyright file="Apprenda81CallsiteMapCEF.ProviderPortal.cs" company="Apprenda, Inc.">
 // Copyright (c) Apprenda, Inc. All rights reserved.
 // Licensed under the MIT license. See the LICENSE.md in the project root for full license information.
 // </copyright>
@@ -25,8 +25,10 @@ namespace Apprenda.AuditEventForwarder.Syslog
             AddMappedMapCef(
                 new[]
                 {
-                    "Persistence Partition Relocation Failed", "Persistence Partition Relocation Started",
-                    "Persistence Partition Relocation Completed", "Persistence Partition Relocation",
+                    "Persistence Partition Relocation Failed",
+                    "Persistence Partition Relocation Started",
+                    "Persistence Partition Relocation Completed",
+                    "Persistence Partition Relocation",
                 }, "Relocate Persistence Partition",
                 "PROV6");
             AddDefaultMapCef("Version Demotion", "PROV7");

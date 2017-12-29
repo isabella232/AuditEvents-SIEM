@@ -1,5 +1,5 @@
 // ----------------------------------------------------------------------------------------------------
-// <copyright file="Apprenda81CallsiteMap.SocControllers.cs" company="Apprenda, Inc.">
+// <copyright file="Apprenda81CallsiteMapCEF.SocControllers.cs" company="Apprenda, Inc.">
 // Copyright (c) Apprenda, Inc. All rights reserved.
 // Licensed under the MIT license. See the LICENSE.md in the project root for full license information.
 // </copyright>
@@ -26,6 +26,7 @@ namespace Apprenda.AuditEventForwarder.Syslog
         /// Factory method which produces a Formatter renaming the incoming event's operation to the provided name and parsing a ReasonDetail from the Details
         /// </summary>
         /// <param name="mappedName">The operation alias to emit</param>
+        /// <param name="cefEventId">The CEF event correlation ID</param>
         /// <returns>A formatter</returns>
         private AuditMapFunc MappedReasonDetailFormatter(string mappedName, string cefEventId)
         {
@@ -55,7 +56,9 @@ namespace Apprenda.AuditEventForwarder.Syslog
 
                 // todo: dto.Details might be a report card.
                 // AddMap("External Auth Plugin Update Failed", DefaultReportCardMappedMapper("Update External Authentication Plugin"));
-                return dto.ToSyslogMessage(Facility.SecurityOrAuthorizationMessages1, Severity.Error,
+                return dto.ToSyslogMessage(
+                    Facility.SecurityOrAuthorizationMessages1,
+                    Severity.Error,
                     $"CEF:0|Apprenda|CloudPlatform|{PlatformVersion}|-|{dto.Operation}|SOC8|outcome={dto.EventTypeDescription()} {result}");
             });
             AddMappedMapCef(new[] { "External Auth Plugin Update Started", "External Auth Plugin Update Completed" }, "Update External Authentication Plugin", "SOC9");

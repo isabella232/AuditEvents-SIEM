@@ -15,7 +15,7 @@ The SIEM integration components include a platform [addon](http://docs.apprenda.
 The Apprenda Audit Events and SIEM project uses [cake](https://cakebuild.net) for build management; after cloning the repository, run the `build.ps1` script from the root of the repo to build. MSBuild 14 or later features are required on the build machine; C# 6 language features are used for conciseness of the code. Cake will automatically install needed build process components through nuget, and produce the build artifacts needed for the addon and extension in the `./out` directory.
 ![Details](Step2.png)
 ### 3. The Operator Dev Team ###
-The extensibility service runs in a development team and needs to have an addon provisioned in order to provide its configuration in a standardized way. The recommended practice is to have a Platform Operator development team to host such extensibility services, and provision addons as needed into that development team. The Platform Operator development team and a developer account within that team will be used for deploying the extension WCF service application later in these instructions.
+It is a recommended operating practice to have a Platform Operator development team to host extensibility services and other operator-controlled applications, and provision addons as needed into that development team. The Platform Operator development team and a developer account within that team will be used for deploying the extension WCF service application later in these instructions.
 ### 4. Creating the Add-on ###
 The Syslog Configuration addon provides a connection definition UI for off-platform Syslog receivers.
   1. As designed, an new copy of the add-on should be added for each Syslog endpoint to be supported by the platform.
@@ -36,13 +36,15 @@ The Syslog Configuration addon provides a connection definition UI for off-platf
         2. Host: the hostname or IP address of the Syslog receiver.
         3. Port: the listening port of the Syslog receiver.
         4. Protocol: the transport protocol, from 'tcp', 'encryptedtcp', or 'udp'. Encrypted TCP is TLS encapsulation over TCP, as supported by [SyslogNet]().
-        5. Event Map: The Audit Events SIEM project supports configurable message formatters, to allow customization of the details transmitted to the Syslog receiver and compatibility with multiple versions of the Apprenda Cloud Platform, as new Audited events may be added to the platform from release to release. A default mapper compatible with Apprenda Cloud Platform 8.1 is included as the `default` Event Map.
+        5. Event Map: The Audit Events SIEM project supports configurable message formatters, to allow customization of the details transmitted to the Syslog receiver and compatibility with multiple versions of the Apprenda Cloud Platform, as new Audited events may be added to the platform from release to release. A default mapper compatible with Apprenda Cloud Platform 8.1 is included as the `default` Event Map (or as `8.1` for future proofing). Formatters supporting the Arcsight CEF format are available in the `8.1CEF` Event Map. Note that for the 8.1CEF formatters, the `cs1` field is used to record original values and `cs2` field to record new values, as json-encoded objects with secrets redacted.
      1. On the Access tab, configure the Addon for restricted development team access and a single instance per development team.
     ![Details](Step4.6.3.PNG)
         1. It is recommended that the Syslog addon only be provisioned on the Operator development team or teams.
         2. There should be only one instance of the Syslog addon per development team. 
+
 ### 5. Test the Add-on Configuration ###
 Using the Actions dropdown, select "Test" for the addon to attempt a connection to the chosen endpoint, and send a test Syslog message from the platform to the Syslog receiver. ![Details](Step5.PNG) ![Success](Step5.success.PNG)
+
 ### 6. Provisioning the Add-on to the Operator Team ###
 1. Connect to the Developer Portal as a member of the Operator development team.
 1. Provision the Add-on into the development team
@@ -51,20 +53,25 @@ Using the Actions dropdown, select "Test" for the addon to attempt a connection 
     ![Details](Step6.2.PNG)
     1. Add an instance of the addon.
     ![Details](Step6.3.PNG)
-    1. The instance alias should be `syslogconnection` to match the Extension app.config. ![Details](Step6.4.PNG) ![Success](Step6.success.PNG)
+    1. The instance alias should be `syslogconnection` to match the Extension app.config. This allows the Extension to use [Add-on Token Swapping]() to retrieve the connection details without rebuilding the extension's application archive. ![Details](Step6.4.PNG) ![Success](Step6.success.PNG)
 
 ### 7. Creating the SIEM Forwarder  workload ###
 1. Connect to the Developer Portal as a member of the Operator development team.
 1. Add the Extension application to the development team.
     1. Click the Application management control.
-    2. Add an application by clicking New, giving the application a meaningful name for the Syslog destination which will be receiving the forwarded event information, and an alias. The alias will be important for the next step.
+    2. Add an application by clicking New, giving the application a meaningful name for the Syslog destination which will be receiving the forwarded event information, and an alias. The alias will be important for the next step. In an environment needing only a single SIEM forwarder, our example uses the application name and alias `siem`.
     3. Upload the extension archive from the distribution package or built source code: `Apprenda.AuditEventForwarder.Syslog.zip`.
     1. Navigate to the Application Dashboard
     1. Promote the application to Sandbox
+
 ### 8. Platform Registry Settings ###
 1. Add a registry setting to the Platform Registry through the  System Operations Center. ![Registry Settings](Step8.0.PNG)
-2. The registry seting should be `Telemetry.AuditEventForwardingTarget` and its value will be `ALIAS(v1)/SysLogAuditForwarder` (The on-platform abbreviated URI for a platfor-routed WCF service endpoint) ![Registry Details](Step8.1.PNG)
-### 9. Update Considerations ###
+2. The registry seting should be `Telemetry.AuditEventForwardingTarget` and its value will be `ALIAS(v1)/SysLogAuditForwarder`. In the example configuration we show, that would be `siem(v1)/SysLogAuditForwarder` (The on-platform abbreviated URI for a platform-routed WCF service endpoint) ![Registry Details](Step8.1.PNG)
+
+### 9. Normal Operation ###
+At this point, with the Extension application in Sandbox or Published lifecycle stage and the Platform Registry configured, audit events will flow through the Extension and be processed. The Platform will log failed audit event forwarding as an error due to the potential security implications of even temporary failures, and log a platform logging event when audit events resume, noting how many were not forwarded. A queueing forwarder enhancement for highly fault sensitive environments would be a logical extension of the work presented here.
+
+### 10. Update Considerations ###
 There is no queueing or replay of audited event messages in the platform auditing facility, so a maintenance window for Syslog receivers will require preplannig if platform events going unrecorded off-platform is a policy issue. The platform supports multi-value `Telemetry.AuditEventForwardingTarget` settings in order to transmit to multiple, potentially disparate, systems.
 
 For maintenance purposes, the `Telemetry.AuditEventForwardingTarget` value may be set blank before patching the Forwarder Workload, to prevent the platform logging errors when forwarding through the extension fails during patching. 

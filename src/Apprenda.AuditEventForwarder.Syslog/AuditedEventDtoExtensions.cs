@@ -5,15 +5,14 @@
 // </copyright>
 // ----------------------------------------------------------------------------------------------------
 
-using SyslogNet.Client;
-
 namespace Apprenda.AuditEventForwarder.Syslog
 {
     using Apprenda.SaaSGrid.Extensions.DTO;
+    using SyslogNet.Client;
 
-/// <summary>
-/// Provide extension methods for the AuditedEventDto type.
-/// </summary>
+    /// <summary>
+    /// Provide extension methods for the AuditedEventDto type.
+    /// </summary>
     public static class AuditedEventDTOExtensions
     {
         /// <summary>
@@ -37,8 +36,22 @@ namespace Apprenda.AuditEventForwarder.Syslog
             }
         }
 
+        /// <summary>
+        /// Format an AuditedEventDTO into a syslog message containing a specific message body.
+        /// </summary>
+        /// <param name="auditedEvent">The audited event</param>
+        /// <param name="message">The message body</param>
+        /// <returns>Syslog Message containing the requested message and audited event details</returns>
         public static SyslogMessage ToSyslogMessage(this AuditedEventDTO auditedEvent, string message) => (auditedEvent == null) ? null : ToSyslogMessage(auditedEvent, Facility.LogAudit, Severity.Informational, message);
 
+        /// <summary>
+        /// Format an AuditedEventDTO into a syslog message containing a specific message body.
+        /// </summary>
+        /// <param name="auditedEvent">The audited event</param>
+        /// <param name="facility">The Syslog facility identifier</param>
+        /// <param name="severity">The Syslog severity identifier</param>
+        /// <param name="message">The message body</param>
+        /// <returns>Syslog Message containing the requested message and audited event details</returns>
         public static SyslogMessage ToSyslogMessage(this AuditedEventDTO auditedEvent, Facility facility, Severity severity, string message)
         {
             return (auditedEvent == null) ? null : new SyslogMessage(

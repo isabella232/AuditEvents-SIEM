@@ -24,5 +24,15 @@ namespace Apprenda.AuditEventForwarder.Syslog.Test
             var map = new Apprenda81CallsiteMap();
             map.Should().NotBeNull();
         }
+
+        /// <summary>
+        /// Creates an instance of the CEF CallsiteMap to ensure it is correctly instantiated without runtime errors.
+        /// </summary>
+        [Fact]
+        public void Version81CefCallsiteMapConstructable()
+        {
+            var map = new Apprenda81CallsiteMapCEF();
+            map.Should().NotBeNull();
+        }
     }
 }

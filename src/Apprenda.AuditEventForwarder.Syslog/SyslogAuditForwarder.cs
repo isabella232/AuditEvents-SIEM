@@ -23,7 +23,7 @@ namespace Apprenda.AuditEventForwarder.Syslog
 
         private readonly ISyslogMessageSerializer _serializer;
 
-        private readonly BaseAuditCallsiteMap _mapper;
+        private readonly IAuditCallsiteMap _mapper;
         private bool _killswitch = false;
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace Apprenda.AuditEventForwarder.Syslog
             }
 
             _serializer = CreateSerializer();
-            _mapper = config.AuditEventMap as BaseAuditCallsiteMap ?? CreateMapper();
+            _mapper = config.AuditEventMap;
         }
 
         /// <summary>
@@ -75,25 +75,12 @@ namespace Apprenda.AuditEventForwarder.Syslog
                 AuditMapFunc map;
                 if (!_mapper.Formatters.TryGetValue(message.Operation, out map))
                 {
-                    map = _mapper.DefaultActionResultMapper;
+                    map = BaseAuditCallsiteMap.DefaultActionResultMapper;
                 }
 
                 var syslogM = map(message);
 
                 sender.Send(syslogM, _serializer);
-            }
-        }
-
-        /// <summary>
-        /// Factory method which selects a BaseAuditCallsiteMap which matches the platform version and syslog receiver configured.
-        /// </summary>
-        /// <returns>The selected BaseAuditedCallsiteMap </returns>
-        private BaseAuditCallsiteMap CreateMapper()
-        {
-            switch (_config.AuditEventMap)
-            {
-                default:
-                    return new Apprenda81CallsiteMap(); // when new callsite mapping is needed, this becomes an version-based factory.
             }
         }
 

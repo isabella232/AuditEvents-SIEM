@@ -1,5 +1,5 @@
 // ----------------------------------------------------------------------------------------------------
-// <copyright file="Apprenda81CallsiteMap.Citadel.cs" company="Apprenda, Inc.">
+// <copyright file="Apprenda81CallsiteMapCEF.Citadel.cs" company="Apprenda, Inc.">
 // Copyright (c) Apprenda, Inc. All rights reserved.
 // Licensed under the MIT license. See the LICENSE.md in the project root for full license information.
 // </copyright>
@@ -17,19 +17,6 @@ namespace Apprenda.AuditEventForwarder.Syslog
     public partial class Apprenda81CallsiteMapCEF
     {
         /// <summary>
-        /// Formatter to handle Login Failure events.
-        /// </summary>
-        /// <param name="auditedEvent">The audited event</param>
-        /// <returns>SyslogMessage representing the event.</returns>
-        private SyslogMessage LoginFailureFormatter(AuditedEventDTO auditedEvent)
-        {
-            var loginDetails = FormatLoginFailureDto(auditedEvent.Details);
-            var message =
-                $"CEF:0|Apprenda|CloudPlatform|{PlatformVersion}|-|{auditedEvent.Operation}|CIT3|outcome={auditedEvent.EventTypeDescription()} {loginDetails}";
-            return auditedEvent.ToSyslogMessage(Facility.SecurityOrAuthorizationMessages1, Severity.Notice, message);
-        }
-
-        /// <summary>
         /// Format a JSON body containing a platform Login Failure DTO as a meaninful message.
         /// </summary>
         /// <param name="json">The json serialized DTO</param>
@@ -40,6 +27,19 @@ namespace Apprenda.AuditEventForwarder.Syslog
             var d = JsonConvert.DeserializeObject<LoginFailureDTO>(jsonDetails.Details);
             return
                 $"User {d.Identifier} Reason {d.Reason} Attempts: {d.FailedLoginAttempts}. Was Locked out: {d.WasLockedOut} Locked out: {d.IsLockedOut} ";
+        }
+
+        /// <summary>
+        /// Formatter to handle Login Failure events.
+        /// </summary>
+        /// <param name="auditedEvent">The audited event</param>
+        /// <returns>SyslogMessage representing the event.</returns>
+        private SyslogMessage LoginFailureFormatter(AuditedEventDTO auditedEvent)
+        {
+            var loginDetails = FormatLoginFailureDto(auditedEvent.Details);
+            var message =
+                $"CEF:0|Apprenda|CloudPlatform|{PlatformVersion}|-|{auditedEvent.Operation}|CIT3|outcome={auditedEvent.EventTypeDescription()} {loginDetails}";
+            return auditedEvent.ToSyslogMessage(Facility.SecurityOrAuthorizationMessages1, Severity.Notice, message);
         }
 
         /// <summary>

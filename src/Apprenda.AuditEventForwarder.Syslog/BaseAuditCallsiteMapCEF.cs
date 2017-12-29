@@ -21,15 +21,10 @@ namespace Apprenda.AuditEventForwarder.Syslog
     public abstract class BaseAuditCallsiteMapCef : IAuditCallsiteMap
     {
         /// <summary>
-        /// Provides the platform version for the default CEF formatter factory
-        /// </summary>
-        protected string PlatformVersion { get; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="BaseAuditCallsiteMapCef"/> class.
         /// </summary>
         /// <param name="platformVersion">ACP Version to mark CEF messages with</param>
-        public BaseAuditCallsiteMapCef(string platformVersion)
+        protected BaseAuditCallsiteMapCef(string platformVersion)
         {
             PlatformVersion = platformVersion;
             Formatters = new Dictionary<string, AuditMapFunc>();
@@ -40,6 +35,11 @@ namespace Apprenda.AuditEventForwarder.Syslog
         /// </summary>
         /// <value>The map of Operations to Formatters</value>
         public Dictionary<string, AuditMapFunc> Formatters { get; }
+
+        /// <summary>
+        /// Gets the platform version for the default CEF formatter factory
+        /// </summary>
+        protected string PlatformVersion { get; }
 
         /// <summary>
         /// Convenience method for adding an operation to formatter mapping.
@@ -65,13 +65,30 @@ namespace Apprenda.AuditEventForwarder.Syslog
             };
         }
 
+        /// <summary>
+        /// Add a DefaultCefOpResultFormatter for the provided CEF Event Id and operation.
+        /// </summary>
+        /// <param name="operation">The operation name</param>
+        /// <param name="cefEventId">The CEF Event ID to map the operation to</param>
         protected void AddDefaultMapCef(string operation, string cefEventId)
         {
             AddMap(operation, DefaultCefOpResultFormatter(cefEventId));
         }
 
-        protected void AddMappedMapCef(string operationName, string renamedOperation, string cefEventId) => AddMappedMapCef(new[]{operationName}, renamedOperation, cefEventId);
+        /// <summary>
+        /// Add a MappedOperationCef renamed operation and CEF ID to a given operation name.
+        /// </summary>
+        /// <param name="operationName">Operation to rename</param>
+        /// <param name="renamedOperation">New operation name for formatter output</param>
+        /// <param name="cefEventId">The CEF Event ID for this operation</param>
+        protected void AddMappedMapCef(string operationName, string renamedOperation, string cefEventId) => AddMappedMapCef(new[] { operationName }, renamedOperation, cefEventId);
 
+        /// <summary>
+        /// Add a MappedOperationCef renamed operation and CEF ID to a given list of operations.
+        /// </summary>
+        /// <param name="operations">Operations to rename</param>
+        /// <param name="renamedOperation">New operation name for formatter output</param>
+        /// <param name="cefEventId">The CEF Event ID for this operation</param>
         protected void AddMappedMapCef(IEnumerable<string> operations, string renamedOperation, string cefEventId)
         {
             if (operations == null)
@@ -86,13 +103,29 @@ namespace Apprenda.AuditEventForwarder.Syslog
             }
         }
 
+        /// <summary>
+        /// Add a mapped operation name as an Action Map operation family with a CEF Event Id to the Formatters collection
+        /// </summary>
+        /// <param name="operationName">Operation Name of the Action</param>
+        /// <param name="cefEventId">The CEF Event ID for the operation family.</param>
         protected void AddActionMapCef(string operationName, string cefEventId) => AddActionMapCef(operationName, operationName, cefEventId);
 
+        /// <summary>
+        /// Add a mapped operation name as an Action Map operation family with a CEF Event Id to the Formatters collection
+        /// </summary>
+        /// <param name="operationName">Operation Name of the Action</param>
+        /// <param name="renamedOperation">Operation name of the mapped family.</param>
+        /// <param name="cefEventId">The CEF Event ID for the operation family.</param>
         protected void AddActionMapCef(string operationName, string renamedOperation, string cefEventId)
         {
             AddMappedMapCef(new[] { $"{operationName} Starting", $"{operationName} Completed", $"{operationName} Failed" }, renamedOperation, cefEventId);
         }
 
+        /// <summary>
+        /// Returns a formatter which formats an auditedevent into a CEF message with an unknown ("-") CEF Event ID.
+        /// </summary>
+        /// <param name="newOperation">The operation to rename all operations passed into the formatter to</param>
+        /// <returns>Formatter which creates SyslogMessages containing event details</returns>
         protected AuditMapFunc MappedOperation(string newOperation)
         {
             return auditedEvent =>
@@ -102,6 +135,37 @@ namespace Apprenda.AuditEventForwarder.Syslog
             };
         }
 
+        /// <summary>
+        /// Returs a formatter which formats an auditedevent into a CEF message with Message, Action and Outcome, providing a CEF Event ID to the formatter.
+        /// </summary>
+        /// <param name="cefEventId">The AuditedEventDTO to format</param>
+        /// <returns>SyslogMessage representation of the event</returns>
+        protected AuditMapFunc DefaultCefActionResultFormatter(string cefEventId)
+        {
+            return auditedEvent =>
+            {
+                if (auditedEvent == null)
+                {
+                    return null;
+                }
+
+                var actionEvent = auditedEvent.Operation.LastWordOf();
+                var operation = actionEvent.Item1;
+                var eventType = actionEvent.Item2;
+                var messageDetail = auditedEvent.Details == null
+                    ? string.Empty
+                    : $"msg={auditedEvent.Details}";
+                var message = $"CEF:0|Apprenda|CloudPlatform|{PlatformVersion}|-|{operation}|{cefEventId}|outcome={eventType} {messageDetail}";
+                return auditedEvent.ToSyslogMessage(message);
+            };
+        }
+
+        /// <summary>
+        /// Creates a AuditMapFunc Formatter that returns a new operation name and CEF event ID when formatting the auditedEVent
+        /// </summary>
+        /// <param name="newOperation">Operation name to overwrite the inbound audited event's operation name</param>
+        /// <param name="cefEventId">the CEF Event ID of this operation</param>
+        /// <returns>A formatter as described above</returns>
         protected AuditMapFunc MappedOperationCef(string newOperation, string cefEventId)
         {
             return auditedEvent =>
@@ -116,7 +180,7 @@ namespace Apprenda.AuditEventForwarder.Syslog
         /// </summary>
         /// <param name="auditedEvent">The audited event to format</param>
         /// <returns>SyslogMessage representing the provided event</returns>
-        public SyslogMessage DefaultReportCardCefFormatter(AuditedEventDTO auditedEvent)
+        protected SyslogMessage DefaultReportCardCefFormatter(AuditedEventDTO auditedEvent)
         {
             if (auditedEvent == null)
             {
@@ -138,36 +202,11 @@ namespace Apprenda.AuditEventForwarder.Syslog
         }
 
         /// <summary>
-        /// Returs a formatter which formats an auditedevent into a CEF message with Message, Action and Outcome, without providing CEF Event Correlation.
-        /// </summary>
-        /// <param name="auditedEvent">The AuditedEventDTO to format</param>
-        /// <returns>SyslogMessage representation of the event</returns>
-        public AuditMapFunc DefaultCefActionResultFormatter(string cefEventId)
-        {
-            return auditedEvent =>
-            {
-                if (auditedEvent == null)
-                {
-                    return null;
-                }
-
-                var actionEvent = auditedEvent.Operation.LastWordOf();
-                var operation = actionEvent.Item1;
-                var eventType = actionEvent.Item2;
-                var messageDetail = auditedEvent.Details == null
-                    ? string.Empty
-                    : $"msg={auditedEvent.Details}";
-                var message = $"CEF:0|Apprenda|CloudPlatform|{PlatformVersion}|-|{operation}|Unknown|outcome={eventType} {messageDetail}";
-                return auditedEvent.ToSyslogMessage(message);
-            };
-        }
-
-        /// <summary>
         /// Returns a formatter which formats an auditedevent into a CEF message with Message, Action and Outcome, including expected Details property.
         /// </summary>
         /// <param name="cefEventId">A CEF Event ID for correlation</param>
         /// <returns>SyslogMessage representation of the event</returns>
-        public AuditMapFunc DefaultCefOpResultFormatter(string cefEventId)
+        protected AuditMapFunc DefaultCefOpResultFormatter(string cefEventId)
         {
             return auditedEvent =>
             {

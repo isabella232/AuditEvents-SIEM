@@ -21,7 +21,7 @@ namespace Apprenda.AuditEventForwarder.Syslog
         /// <returns>The string without newlines</returns>
         public static string StripNewLines(this string source)
         {
-            return String.IsNullOrEmpty(source) ? String.Empty : source.Replace("\r\n", String.Empty);
+            return string.IsNullOrEmpty(source) ? string.Empty : source.Replace("\n", string.Empty).Replace("\r", string.Empty);
         }
 
         /// <summary>

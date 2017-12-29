@@ -1,5 +1,5 @@
 // ----------------------------------------------------------------------------------------------------
-// <copyright file="Apprenda81CallsiteMap.PromotionTasks.cs" company="Apprenda, Inc.">
+// <copyright file="Apprenda81CallsiteMapCEF.PromotionTasks.cs" company="Apprenda, Inc.">
 // Copyright (c) Apprenda, Inc. All rights reserved.
 // Licensed under the MIT license. See the LICENSE.md in the project root for full license information.
 // </copyright>
@@ -42,7 +42,7 @@ namespace Apprenda.AuditEventForwarder.Syslog
                 detail = $"{av.Name} ({av.Alias}) {av.Stage}";
             }
 
-            var message = $"CEF:0|Apprenda|CloudPlatform|{PlatformVersion}|-|{auditedEvent.Operation}|Unknown|outcome={auditedEvent.EventTypeDescription()} {detail}";
+            var message = $"CEF:0|Apprenda|CloudPlatform|{PlatformVersion}|-|{auditedEvent.Operation}|PROMO1|outcome={auditedEvent.EventTypeDescription()} {detail}";
 
             return new SyslogMessage(
                 auditedEvent.Timestamp,

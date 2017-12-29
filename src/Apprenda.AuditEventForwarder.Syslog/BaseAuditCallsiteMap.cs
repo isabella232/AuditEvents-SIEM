@@ -23,11 +23,9 @@ namespace Apprenda.AuditEventForwarder.Syslog
     /// </summary>
     public abstract class BaseAuditCallsiteMap : IAuditCallsiteMap
     {
-
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseAuditCallsiteMap"/> class.
         /// </summary>
-        /// <param name="platformVersion">Target cloud platform version</param>
         protected BaseAuditCallsiteMap()
         {
             Formatters = new Dictionary<string, AuditMapFunc>();
@@ -119,7 +117,7 @@ namespace Apprenda.AuditEventForwarder.Syslog
         /// </summary>
         /// <param name="auditedEvent">The audited event</param>
         /// <returns>Syslos Message representing the event</returns>
-        public SyslogMessage DefaultActionResultMapper(AuditedEventDTO auditedEvent) => auditedEvent == null ? null : FromEventDTO(auditedEvent, auditedEvent.Operation);
+        public static SyslogMessage DefaultActionResultMapper(AuditedEventDTO auditedEvent) => auditedEvent == null ? null : FromEventDTO(auditedEvent, auditedEvent.Operation);
 
         /// <summary>
         /// Default formatter for AuditedEventDTO whose EventType is not encoded in the message and which has a non-empty Results body to include.
@@ -146,14 +144,14 @@ namespace Apprenda.AuditEventForwarder.Syslog
         /// Convenience method for adding an operation emitted as operationName [Starting|Completed|Failed] to all map through the same formatter
         /// </summary>
         /// <param name="operationName">The base operation name</param>
-        protected virtual void AddActionMap(string operationName) => AddActionMap(operationName, operationName);
+        protected void AddActionMap(string operationName) => AddActionMap(operationName, operationName);
 
         /// <summary>
         /// Convenience method for adding an operation emitted as operationName [Starting|Completed|Failed] to all map through the same formatter
         /// </summary>
         /// <param name="operationName">The base operation name</param>
         /// <param name="renamedOperation">The collecting operation name</param>
-        protected virtual void AddActionMap(string operationName, string renamedOperation)
+        protected void AddActionMap(string operationName, string renamedOperation)
         {
             AddMappedMap(new[] { $"{operationName} Starting", $"{operationName} Completed", $"{operationName} Failed" }, renamedOperation);
         }
@@ -163,7 +161,7 @@ namespace Apprenda.AuditEventForwarder.Syslog
         /// </summary>
         /// <param name="mappedOperation">Single operation to alias</param>
         /// <param name="renamedOperation">The standardized operation alias</param>
-        protected virtual void AddMappedMap(string mappedOperation, string renamedOperation)
+        protected void AddMappedMap(string mappedOperation, string renamedOperation)
         {
             AddMap(mappedOperation, MappedOperation(renamedOperation));
         }
@@ -173,7 +171,7 @@ namespace Apprenda.AuditEventForwarder.Syslog
         /// </summary>
         /// <param name="operations">An enumerable list of operation names to alias</param>
         /// <param name="renamedOperation">The operation name to alias them</param>
-        protected virtual void AddMappedMap(IEnumerable<string> operations, string renamedOperation)
+        protected void AddMappedMap(IEnumerable<string> operations, string renamedOperation)
         {
             if (operations == null)
             {
@@ -192,7 +190,7 @@ namespace Apprenda.AuditEventForwarder.Syslog
         /// </summary>
         /// <param name="newOperation">The new operation name</param>
         /// <returns>An AuditMapFunc providing simple rename-and-format handling of an AuditedEventDTO.</returns>
-        protected virtual AuditMapFunc MappedOperation(string newOperation)
+        protected AuditMapFunc MappedOperation(string newOperation)
         {
             return auditedEvent =>
             {
